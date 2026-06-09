@@ -4,19 +4,17 @@ Projeto acadêmico desenvolvido para a disciplina de DevOps com o objetivo de in
 
 ## Tecnologias Utilizadas
 
-* React + Vite
-* Node.js
-* Express
-* PostgreSQL
-* Docker
-* Docker Compose
-* GitHub Actions
-* Jest
-* Supertest
+- React + Vite
+- Node.js
+- Express
+- PostgreSQL
+- Docker
+- Docker Compose
+- GitHub Actions
+- Jest
+- Supertest
 
 ## Estrutura do Projeto
-
-```text
 sistema-pedidos-devops/
 ├── frontend/
 ├── backend/
@@ -28,63 +26,28 @@ sistema-pedidos-devops/
 │   └── workflows/
 │       └── ci.yml
 ├── docker-compose.yml
-├── .env
+├── .env.example
 ├── .gitignore
 └── README.md
-```
 
 ## Funcionalidades
 
-* Consulta de pedidos via API REST
-* Integração entre React e Express
-* Persistência de dados em PostgreSQL
-* Testes automatizados do backend
-* Containerização com Docker
-* Orquestração com Docker Compose
-* Integração Contínua com GitHub Actions
-
-## Como Executar o Backend
-
-```bash
-cd backend
-npm install
-npm start
-```
-
-A API ficará disponível em:
-
-```text
-http://localhost:3001
-```
-
-Health Check:
-
-```text
-http://localhost:3001/health
-```
-
-## Como Executar o Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Aplicação disponível em:
-
-```text
-http://localhost:5173
-```
-
-## Como Executar os Testes
-
-```bash
-cd backend
-npm test
-```
+- Consulta de pedidos via API REST
+- Integração entre React e Express
+- Persistência de dados em PostgreSQL
+- Testes automatizados do backend
+- Containerização com Docker
+- Orquestração com Docker Compose
+- Integração Contínua com GitHub Actions
+- Deploy automatizado no Docker Hub
 
 ## Como Executar com Docker Compose
+
+Copie o arquivo de exemplo e preencha as variáveis:
+
+```bash
+cp .env.example .env
+```
 
 Construir e iniciar todos os serviços:
 
@@ -104,13 +67,38 @@ Encerrar os containers:
 docker compose down
 ```
 
+## Como Executar o Backend
+
+```bash
+cd backend
+npm install
+npm start
+```
+
+A API ficará disponível em: `http://localhost:3001`
+
+Health Check: `http://localhost:3001/health`
+
+## Como Executar o Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Aplicação disponível em: `http://localhost:5173`
+
+## Como Executar os Testes
+
+```bash
+cd backend
+npm test
+```
+
 ## Banco de Dados
 
-O banco PostgreSQL é inicializado automaticamente através do arquivo:
-
-```text
-database/init.sql
-```
+O banco PostgreSQL é inicializado automaticamente através do arquivo `database/init.sql`.
 
 Estrutura inicial:
 
@@ -122,37 +110,33 @@ CREATE TABLE IF NOT EXISTS pedidos(
 );
 ```
 
-Registro inicial:
-
-```sql
-INSERT INTO pedidos(descricao)
-VALUES('Pedido Inicial');
-```
-
 ## Pipeline de Integração Contínua
 
 O projeto utiliza GitHub Actions para automatizar:
 
-* Checkout do código
-* Configuração do ambiente Node.js
-* Instalação das dependências
-* Execução dos testes automatizados
-* Validação da aplicação
+- Checkout do código
+- Configuração do ambiente Node.js
+- Instalação das dependências
+- Execução dos testes automatizados
+- Build e push das imagens Docker para o Docker Hub
 
-A pipeline é executada automaticamente a cada push ou pull request configurado no workflow.
+A pipeline é executada automaticamente a cada push para a branch `main`.
 
-## Correções e Melhorias Implementadas
+## Deploy no Docker Hub
 
-* Criação da estrutura inicial do projeto
-* Implementação do backend com Express
-* Integração com PostgreSQL
-* Desenvolvimento do frontend em React
-* Criação de testes automatizados
-* Containerização com Docker
-* Configuração do Docker Compose
-* Configuração de variáveis de ambiente
-* Configuração do GitHub Actions
-* Documentação do projeto
+As imagens são publicadas automaticamente via GitHub Actions em:
+
+- `santaninhazx/sistema-pedidos-devops-backend:latest`
+- `santaninhazx/sistema-pedidos-devops-frontend:latest`
+
+As credenciais do Docker Hub são armazenadas como secrets no GitHub (`DOCKERHUB_USERNAME` e `DOCKERHUB_TOKEN`), nunca expostas no código.
+
+## Segurança
+
+- Variáveis sensíveis armazenadas no `.env` (não commitado)
+- `.env.example` disponível como referência
+- Secrets do GitHub Actions para credenciais de deploy
+- `.gitignore` configurado para ignorar arquivos sensíveis
 
 ## Correções de Bugs Realizadas
 
