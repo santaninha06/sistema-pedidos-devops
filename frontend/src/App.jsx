@@ -6,7 +6,7 @@ function App() {
 
  useEffect(()=>{
 
-  fetch('http://localhost:3001/api/pedidos')
+  fetch(`${import.meta.env.VITE_API_URL}/api/pedidos`)
    .then(res=>res.json())
    .then(data=>setPedidos(data))
 
