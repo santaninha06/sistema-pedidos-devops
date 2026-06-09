@@ -9,13 +9,11 @@ on:
       - main
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-
     defaults:
       run:
         working-directory: backend
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -31,6 +29,30 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: Build Docker images
-        working-directory: .
-        run: docker compose build
+  build-and-push:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login no Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build e push backend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/sistema-pedidos-devops-backend:latest
+
+      - name: Build e push frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/sistema-pedidos-devops-frontend:latest
